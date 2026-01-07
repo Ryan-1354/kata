@@ -58,12 +58,12 @@
             data.forEach(item=>{
                 template+=`<li>${item.content}<button type='button' class=buttonByRemove data-id=${item.id}>刪除</button></li>`;
             });
-             const buttonByRemove=document.querySelectorAll('.buttonByRemove');
             root.innerHTML=template;
+             const buttonByRemove=document.querySelectorAll('.buttonByRemove');
             buttonByRemove.forEach(item=>{
-                item.addEventListener('click', function(){
-                    const id=item.data-id;
-                    removeData(id);
+                item.addEventListener('click', function(e){
+                    const selectedId=e.target.dataset.id;
+                    removeData(selectedId);
                 })
             })
 
