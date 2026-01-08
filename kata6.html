@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="root"><ul></ul></div>
+    <input type="text" class="inputByAdd">
+    <button type="button" class="buttonByAdd">新增</button>
+
+
+
+    <script>
+        const data = [
+                {
+                    id:1,
+                    content:'我是卡斯柏'
+                },
+                {
+                    id:2,
+                    content:'我是傑克'
+                },
+                {
+                    id:3,
+                    content:'我是小美人魚'    
+                },
+            ];
+        
+        //新增data
+        function addData(content){
+            const givenId=data.length+1;
+            data.push({
+                id:givenId,
+                content,
+            });
+            render();
+        };
+
+        //刪除data
+        function removeData(id){
+            const index=data.findIndex(item=>id===item.id);
+            data.splice(index,1);
+            render();
+        };
+
+        //渲染資料
+        const root=document.querySelector('.root');
+        function render(){
+            let template='';
+            data.forEach(item=>{
+            template+=`<li>${item.content}<button type='button' class='buttonByRemove' data-id=${item.id}>刪除</button></li>`
+            });
+            root.innerHTML=template;
+            //刪除資料
+            const buttonByRemove=document.querySelectorAll('.buttonByRemove');
+            buttonByRemove.forEach(item=>{
+                item.addEventListener('click', function(e){
+                    const id=e.target.dataset.id;
+                    removeData(id);
+                })
+            })
+            
+        };
+        
+        //新增item
+        const inputByAdd=document.querySelector('.inputByAdd');
+        const buttonByAdd=document.querySelector('.buttonByAdd');
+        
+        buttonByAdd.addEventListener('click', function(){
+            const val=inputByAdd.value;
+            addData(val);
+            inputByAdd.value='';
+        })
+        
+        render();
+
+
+
+
+    
+    </script>
+    
+</body>
+</html>
