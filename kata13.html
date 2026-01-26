@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="root"></div>
+    <input type="text" class="addInput" />
+    <button type="button" class="addBtn">Add</button>
+
+    <script>
+      const data = [
+        {
+          id: 1,
+          content: "我是卡斯柏",
+        },
+        {
+          id: 2,
+          content: "我是傑克",
+        },
+        {
+          id: 3,
+          content: "我是小美人魚",
+        },
+      ];
+
+      //新增data
+      let id = data.length;
+      const addData = (content) => {
+        id += 1;
+        data.push({
+          id,
+          content,
+        });
+        render();
+      };
+
+      //刪除data
+      const removeData = (id) => {
+        const index = data.findIndex((item) => id === item.id);
+        data.splice(index, 1);
+        render();
+      };
+
+      //render
+      const root = document.querySelector(".root");
+      const render = () => {
+        let template = "";
+        data.forEach((item) => {
+          template += `<li>${item.content} , id: ${item.id} <button class="removeBtn" data-id=${item.id}>Remove</button></li>`;
+        });
+        root.innerHTML = `<ul>${template}</ul>`;
+        const removeBtn = document.querySelectorAll(".removeBtn");
+        removeBtn.forEach((item) => {
+          item.addEventListener("click", () => {
+            const id = Number(item.dataset.id);
+            removeData(id);
+          });
+        });
+      };
+      render();
+      //新增li
+      const addBtn = document.querySelector(".addBtn");
+      const addInput = document.querySelector(".addInput");
+      addBtn.addEventListener("click", () => {
+        const val = addInput.value;
+        addData(val);
+        addInput.value = "";
+      });
+    </script>
+  </body>
+</html>
